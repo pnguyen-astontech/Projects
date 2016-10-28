@@ -1,0 +1,88 @@
+<div class="container">
+	<div class="jumbotron">
+		<h2>Weather App</h2>
+	</div>
+
+	<div class="form-group text-center col-xs-6 col-xs-offset-2">
+		<input class="form-control" type="text" ng-model="place"></input>
+	</div>
+
+	<div class="col-xs-2">
+		<button class="btn btn-default" ng-click="loc.getLocation(place)">Search Location</button>
+	</div>
+
+	<div class="col-xs-6 col-xs-offset-3">
+		<table class="table table-striped">
+			<tbody>
+				<tr ng-repeat="result in loc.location.results">
+					<td><b>{{result.formatted_address}}</b></td>
+					<td><button class="btn btn-default pull-right" ng-click="loc.getWeather(result.geometry.location.lat, result.geometry.location.lng)">Get Weather</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div id="weatherModal" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">{{loc.weather.name}} Weather Details</h4>
+					<span><p>Geo Coordinates: [ {{loc.weather.coord.lat}}, {{loc.weather.coord.lon}} ]</p></span>
+				</div>
+
+				<div class="modal-body">
+					<div class="col-xs-4">
+						<h2>{{loc.weather.dt*1000 | date:'EEEE dd MMM'}}</h2>
+					</div>
+					<div class="col-xs-4">
+						<span><h2>{{loc.weather.weather[0].main}}</h2><span>{{loc.weather.weather[0].description}}</span></span><br>
+					</div>
+					<div class="col-xs-4">
+						<img src="http://openweathermap.org/img/w/{{loc.weather.weather[0].icon}}.png">
+						<br><span>Clouds {{loc.weather.clouds.all}}%</span>
+						<br><span>Wind {{loc.weather.wind.speed}} m/s</span>
+					</div>
+
+					<div class="form-group">
+						<table class="table table-striped">
+							<thead>
+								<th>Humidity</th>
+								<th>Pressure</th>
+								<th>Temperature</th>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{{loc.weather.main.humidity}}</td>
+									<td>{{loc.weather.main.pressure}}</td>
+									<td>{{loc.weather.main.temp * (9/5) - 459.67 | number:2}} &#8457;</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<h2>Forcast</h2>
+					<table class="table table-striped">
+						<tbody>
+							<tr ng-repeat="item in loc.forecast.list">
+								<td><img src="http://openweathermap.org/img/w/{{item.weather[0].icon}}.png"></td>
+								<td>{{item.dt*1000 | date:'EEEE dd MMM'}}
+									<br><span>Min: {{item.temp.min * (9/5) - 459.67 | number:2}} &#8457;</span>
+									<br><span>Max: {{item.temp.max * (9/5) - 459.67 | number:2}} &#8457;</span></td>
+								<td>{{item.weather[0].main}}<br><span>{{item.weather[0].description}}</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+</div>

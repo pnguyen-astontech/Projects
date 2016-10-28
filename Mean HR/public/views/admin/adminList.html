@@ -1,0 +1,31 @@
+<div admin-sub-nav-bar></div>
+
+<div>
+	<div class="col-xs-offset-2">
+		<div>
+			<table class="table table-striped">
+				<thead>
+					<th>Make</th>
+					<th>Model</th>
+					<th>Plate</th>
+					<th>VIN</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="vehicle in vac.vehicleList">
+						<td>{{vehicle.make}}</td>
+						<td>{{vehicle.model}}</td>
+						<td>{{vehicle.plate}}</td>
+						<td>{{vehicle.vin}}</td>
+						<td><button ng-click="vac.editVehicle(vehicle._id)" class="btn btn-default">Edit</button></td>
+						<td><button ng-click="vac.deleteVehicle(vehicle._id)" class="btn btn-default">Delete</button></td>
+					</tr>
+
+				</tbody>
+
+			</table>
+		</div>
+
+	</div>
+</div>

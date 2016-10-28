@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Angular JS Demo</title>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <!--<script src="/static/js/ui-bootstrap-tpls-2.1.3.js"></script>-->
+    <script src="employee.js"></script>
+
+</head>
+<body ng-app="app" ng-controller="EmployeeCtrl as empl">
+<div>
+    <div>
+
+        <button onclick="$('#employeeModal').modal('show')" class="btn">Add New Employee</button>
+        <!--<button class="btn btn-success" ng-click="empl.openModal()">Open Modal</button>-->
+
+
+        <div id="employeeModal" class="modal" modal="employeeModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add Employee</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <fieldset>
+
+                                <hidden ng-model="empl.employee.id" id="employeeId" />
+                                <hidden ng-model="empl.employee.version" id="employeeVersion"/>
+
+                                <div class="form-group">
+                                    <label for="inputFirstName" class="col-lg-2 control-label">First Name</label>
+                                    <div class="col-lg-10">
+                                        <input ng-model="empl.employee.firstName" type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputLastName" class="col-lg-2 control-label">Last Name</label>
+                                    <div class="col-lg-10">
+                                        <input ng-model="empl.employee.lastName" type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputBackground" class="col-lg-2 control-label">Background</label>
+                                    <div class="col-lg-10">
+                                        <textarea ng-model="empl.employee.background" class="form-control" rows="3" id="inputBackground"></textarea>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="empl.save(empl.employee)">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table id="employee-table" class="table table-striped table-hover ">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Background</th>
+                    <th>Projects</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in empl.employeeList">
+                    <td>{{employee.id}}</td>
+                    <td>{{employee.firstName}} {{employee.lastName}}</td>
+                    <td>{{employee.background}}</td>
+                    <td><select><option>(Select Project)</option></select></td>
+                    <td><button class="btn" ng-click='empl.edit(employee.id)'>Edit</button></td>
+                    <td><button class="btn" ng-click='empl.delete(employee.id)'>Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!--<div ng-repeat="employee in empl.employeeList">-->
+            <!--{{employee.firstName}} {{employee.lastName}}-->
+        <!--</div>-->
+
+        <form ng-submit="empl.lookup(employeeId)">
+            <input type="text" ng-model="employeeId"/>
+            <button type="submit">Lookup Employee</button>
+        </form>
+
+        <p>The ID is {{empl.employeeEdit.id}}</p>
+        <p>The Employee Name is {{empl.employeeEdit.firstName}} {{empl.employeeEdit.lastName}}</p>
+        <p>Background is {{empl.employeeEdit.background}}</p>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div modal="testModal" close="cancel()">
+
+
+</div>
+
+    <!--<div ng-app="app">-->
+
+        <!--<h1>Controllers</h1>-->
+        <!--<div ng-controller="MainCtrl as main">-->
+            <!--<p>{{main.message}}</p>-->
+            <!--<form ng-submit="main.updateMessage(newMessage)">-->
+                <!--<input type="text" ng-model="newMessage"></input>-->
+                <!--<button type="submit">UpdateMessage</button>-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</div>-->
+</body>
+</html>
