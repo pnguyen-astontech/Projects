@@ -1,0 +1,22 @@
+<div navbar></div>
+<div class="container">
+    <div cards-navbar></div>
+    <div>
+        <div class="col-xs-offset-2">
+            <div class="col-xs-4">
+                <table class="table table-striped">
+                    <thead>
+                        <th>Name</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="card in app.cardList">
+                            <td><a href="#" ng-click="app.openCardModal('sm', card)">{{card.name}}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div footer></div>

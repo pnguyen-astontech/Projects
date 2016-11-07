@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>FOW App</title>
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/common.css" rel="stylesheet" type="text/css">
+	<!-- SPELLS -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<!-- load jquery -->
+	<!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>-->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="/js/ui-bootstrap-tpls-2.2.0.min.js"></script>
+
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+
+	
+	<script src="/js/controllers/appController.js"></script>
+	<script src="/js/services/cardService.js"></script>
+	<script src="/js/appRoutes.js"></script>
+
+	<script src="/js/app.js"></script>
+	<base href="/">
+
+
+</head>
+
+<body ng-app="mainApp" ng-controller="appController as app">
+	<ui-view></ui-view>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+.footer-float {
+    float: left;
+    list-style-type: none;
+}
+.footer {
+    width: 100%;
+    background-color: #222222;
+    color: #ffffff;
+    position: absolute;
+    padding-bottom: 25px;
+    bottom: 0;
+}
+
+.float-right {
+    clear: both;
+    float: right;
+}
+
+.lb-sm {
+    font-size: 12px;
+    padding: 5px;
+}
