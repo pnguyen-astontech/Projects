@@ -1,22 +1,19 @@
 <div navbar></div>
 <div class="container">
     <div cards-navbar></div>
-    <div>
-        <div class="col-xs-offset-2">
-            <div class="col-xs-4">
-                <table class="table table-striped">
-                    <thead>
-                        <th>Name</th>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="card in app.cardList">
-                            <td><a href="#" ng-click="app.openCardModal('sm', card)">{{card.name}}</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+
+    <div class="col-xs-10">
+        <div class="btn-group" ng-repeat="attr in app.attributeList">
+            <label class="btn btn-default" ng-model="checkModel.left" ng-click="app.showDetails = true" uib-btn-checkbox>{{attr.attribute}}</label>
+        </div>
+        <div class="releases" ng-class="{ 'hidden': ! app.showDetails }">
+            <div class="btn-group text-center" ng-repeat="rel in app.releaseList">
+                <button class="btn btn-default" ng-click="displayReleases(attr.attribute)">{{rel.release}}</button>
             </div>
         </div>
+
     </div>
+
 </div>
 
 <div footer></div>

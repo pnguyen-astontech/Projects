@@ -6,8 +6,6 @@ angular.module('appRoutes', ['ui.router'])
         '$locationProvider',
         function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
-
-
             $stateProvider
                 .state('index', {
                     url: '/',

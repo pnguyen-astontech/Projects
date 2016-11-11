@@ -1,14 +1,25 @@
-.footer-float {
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0 0 100px;  
+}
+
+.footer-float-left {
     float: left;
     list-style-type: none;
 }
 .footer {
-    width: 100%;
     background-color: #222222;
     color: #ffffff;
     position: absolute;
-    padding-bottom: 25px;
+    left: 0;
     bottom: 0;
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
 }
 
 .float-right {
@@ -19,4 +30,22 @@
 .lb-sm {
     font-size: 12px;
     padding: 5px;
+}
+.navbar {
+    padding: 25px;
+}
+.navbar-nav {
+    padding-top: 25px;
+    font-size: 24px;
+    opacity: 0.5;
+    padding-right: 50px;
+}
+
+.navbar-default {
+    background: #ffffff;
+}
+
+.releases {
+    transition: .8s;
+    overflow: hidden;
 }

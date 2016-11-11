@@ -4,7 +4,10 @@ var Schema = mongoose.Schema;
 
 var cardSchema = new Schema({
     name : String,
+    card_id: String,
+    rarity: String,
     type : String,
+    sub_type: String,
     picture : String,
 });
 

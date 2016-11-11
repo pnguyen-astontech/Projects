@@ -1,15 +1,15 @@
-<nav class="navbar navbar-static-top navbar-inverse">
+<nav class="navbar navbar-static-top" role="navigation">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+        <div class="navbar-header navbar-default">
+            <button type="button" class="navbar-toggle collapsed" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" ui-sref="index">Home</a>
+            </button>            
+            <a class="navbar-brand" ui-sref="index"><img alt="brand" src="/img/logo.png"></a>        
         </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+        <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
             <ul class="nav navbar-nav">
                 <li><a ui-sref="cards">DB</a></li>
                 <li><a ui-sref="admin">Admin</a></li>

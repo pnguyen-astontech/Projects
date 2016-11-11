@@ -1,42 +1,27 @@
 # FOW CARD DB
 
-# Types: Light, Flame, Water, Wind, Darkness, Void
-# release: LEL, CFC, SDL, VIN002, BFA, TMS, TTW, SKL, VS01, VIN001, MOA, MPR, TAT, CMF, SD
+# As of 11/09/2016
+# Attributes: Light, Flame, Water, Wind, Darkness, Void
+# Releases: LEL, CFC, SDL, VIN002, BFA, TMS, TTW, SKL, VS01, VIN001, MOA, MPR, TAT, CMF, SD
 
+# NOTES: 
+# Data collected from http://fowtcg.com/cards/
+# If webpage structure changes from 11/09/2016 code will need to be updated to match the html strucuture of the data.
 
-# void/LEL : 2528 - 2499
-# darkness/LEL : 2498 - 
+#---------------------------------------------------------------------------------------------------------------------------
 
-# <div id="page_navi">
-# 		<a href="/cards/light/SD/17" class="prev">Prev</a>
-# 		<a href="/cards/light/SD/2" class="next">Next</a>
-# </div>
-
-# <img src="/cards/images/300xNxca0a1397856ef04c8241e6d62ede100c840e1341ebc26b0873e098dac5a962a547224bffcff95bb5.jpg.pagespeed.ic.sEDSXIsM94.webp" alt="Beast of Holy Light" width="300" data-pagespeed-url-hash="23869118" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
-
-# <tr class="card_info">
-# 	<td class="">LEL-003</td>
-# 	<td class="">C</td>
-# 	<td class="">Resonator</td>
-# 	<td class="tail">Beast</td>
-# </tr>
-
-# -----------------------------------------
-
-
-#---------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------
 # IMPORTS
-#---------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------
 import http.client
 from pymongo import MongoClient
 
-#---------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------
 # HELPER FUNCTIONS
-#---------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------
 
-
-def getCardsNumber(type, release):
-	server.putrequest('GET', '/cards/' + type + '/' + release + '/')
+def getCardsNumber(attr, release):
+	server.putrequest('GET', '/cards/' + attr + '/' + release + '/')
 	server.putheader('Accept', 'text/html')
 	server.endheaders()
 	response = server.getresponse()
@@ -45,51 +30,89 @@ def getCardsNumber(type, release):
 		data = response.readlines()
 		for line in data:
 			line = line.decode('utf-8')
-			if "<a href=\"/cards/" + type + "/" + release in line:
+			if "<a href=\"/cards/" + attr + "/" + release in line:
 				cardNumbers.append(line[37:-4])
 	return cardNumbers
 
-def getCardData(type, release, number): 
-	server.putrequest('GET', '/cards/' + type + '/' + release + '/' + number + '/')
+def getCardData(attr, release, number): 
+	server.putrequest('GET', '/cards/' + attr + '/' + release + '/' + number + '/')
 	server.putheader('Accept', 'text/html')
 	server.endheaders()
 	response = server.getresponse()
 	if response.status == 200:
 		data = response.readlines()
 		info = {}
+		info["details"] = []
+		cnt = 0;
+		cont = False
 		for line in data:
 			line = line.decode('utf-8')
-			if "<img src=\"/cards/images" in line:				
+			if "<img src=\"/cards/images" in line:
 				info["picture"] = "http://fowtcg.com" + line[13:line.find("alt")-2]
 			if "<td class=\"card_name" in line:
 				info["name"] = line[38:-6]
+			if cont == True:
+				if cnt == 3:
+					info["details"].append(line[21:-6])
+					cont = False
+				else:
+					info["details"].append(line[17:-6])
+					cnt += 1;
+			if "<tr class=\"card_info" in line:
+				cont = True
 	return info
 
-#---------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------
 # MAIN
-#---------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------
 client = MongoClient()
 db = client['fow']
 
-post1 = { 
-	"name": "python",
-	"type": "python",
-	"picture": "python"
-}
+# Emtpy db
+cards = db.cards.delete_many({})
+print("cards table: ", cards.deleted_count)
 
-results = db.cards.find()
-for record in results:
-	print(record)
+attributes = db.attributes.delete_many({})
+print("attributes table: ", attributes.deleted_count)
 
-client.close()
+releases = db.releases.delete_many({})
+print("releases table: ", releases.deleted_count)
 
 server = http.client.HTTPConnection('fowtcg.com')
 
-types = ['light', 'flame', 'water', 'wind', 'darkness', 'void']
-releases = ['LEL', 'CFC']
+attr = ['light', 'flame', 'water', 'wind', 'darkness', 'void']
+releases = ['LEL', 'CFC', 'SDL', 'VIN002', 'BFA', 'TMS', 'TTW', 'SKL', 'VS01', 'VIN001', 'MOA', 'MPR', 'TAT', 'CMF', 'SD']
 
-cardNumbers = getCardsNumber(types[0], releases[0])
-for n in cardNumbers:
-	print(getCardData(types[0], releases[0], n))
+for data in attr:
+	results = db.attributes.insert_one({
+		"attribute": data
+	})
 
+for data in releases:
+	results = db.releases.insert_one({
+		"release": data
+	})
+
+for a in attr:
+	for r in releases:
+		cardNumbers = getCardsNumber(a, r)
+		for n in cardNumbers:
+			data = (getCardData(a, r, n))
+			try:
+				results = db.cards.insert_one({
+					"name": data["name"],
+					"card_id": data["details"][0],
+					"rarity": data["details"][1],
+					"type": data["details"][2],
+					"sub_type": data["details"][3],
+					"picture": data["picture"]
+				})
+			except:
+				try:
+					print(data)
+				except:
+					print("Error")
+
+# Clean up
+client.close()
 server.close()
