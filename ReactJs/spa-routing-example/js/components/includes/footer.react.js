@@ -19,9 +19,6 @@ var Footer = React.createClass({
                         <li><a href="https://twitter.com" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i></a></li>
                         <li> </li>
                     </ul>
-                    <div className="float-right">
-                        &copy;Copyright 2016 pnguyen@fap.com
-                    </div>
                 </div>
             </footer>
         );
