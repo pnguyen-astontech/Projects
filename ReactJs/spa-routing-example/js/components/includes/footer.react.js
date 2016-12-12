@@ -14,7 +14,7 @@ var Footer = React.createClass({
                     </ul>
                     <ul className="footer-float-left">
                         <li>LINKS</li>
-                        <li><a href="https://github.com/pnguyen-astontech/Projects/tree/master/Mean/FOW" target="_blank"><i className="fa fa-github" aria-hidden="true"></i></a></li>
+                        <li><a href="https://github.com/pnguyen-astontech/Projects/tree/master/ReactJs/spa-routing-example" target="_blank"><i className="fa fa-github" aria-hidden="true"></i></a></li>
                         <li><a href="https://facebook.com" target="_blank"><i className="fa fa-facebook" aria-hidden="true"></i></a></li>
                         <li><a href="https://twitter.com" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i></a></li>
                         <li> </li>
